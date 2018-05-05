@@ -22,7 +22,7 @@ class Post:
 
     def __get_content(self):
         if 'OP_RETURN' not in self.raw_content:
-            raise self.Error('Transaction did not contains real content.')
+            raise self.Error('Transaction does not contain real content.')
         hex_str = self.raw_content.lstrip('OP_RETURN ')
         return decode(hex_str, 'hex').decode('utf-8')
 
