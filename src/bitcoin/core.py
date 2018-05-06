@@ -21,3 +21,11 @@ class Bitcoin(metaclass=ABCMeta):
     @abstractmethod
     def get_raw_transaction_by_hash(self, hashcode: str) -> dict:
         pass
+
+    @abstractmethod
+    def list_unspent(self):
+        pass
+
+    @abstractmethod
+    def send_raw_transaction(self, hexstring: str) -> str:
+        pass

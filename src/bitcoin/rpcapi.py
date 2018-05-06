@@ -30,3 +30,11 @@ class BitcoinRPC(Bitcoin):
     def get_raw_transaction_by_hash(self, hashcode):
         r = self.create_request({'method': 'getrawtransaction', 'params': [hashcode, True]})
         return r.json()
+
+    def list_unspent(self):
+        r = self.create_request({'method': 'listunspent', 'params': None})
+        return r.json()['result']
+
+    def send_raw_transaction(self, hexstring: str):
+        r = self.create_request({'method': 'sendrawtransaction', 'params': [hexstring]})
+        return r.json()['result']

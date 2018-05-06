@@ -1,9 +1,29 @@
 from bitcoin import BitcoinRPC
 from bitcoin import PostFactory
+from flask import request
+from flask_api import FlaskAPI
 
-from pprint import PrettyPrinter
+app = FlaskAPI('InfiniteSpeech')
+rpc = BitcoinRPC()
+factory = PostFactory(rpc)
 
-p = PrettyPrinter(indent=2)
 
-factory = PostFactory(BitcoinRPC())
-p.pprint([post.json for post in factory.get_post(10, 32)])
+@app.route('/posts/<int:count>', methods=['GET'])
+@app.route('/posts/<int:count>/offset/<int:offset>')
+def get_posts(count, offset=0):
+    return [p.json for p in factory.get_posts(count, offset)]
+
+
+@app.route('/quota', methods=['GET'])
+def get_quota():
+    unspent = rpc.list_unspent()[0]
+    return {
+        'quota': unspent['txid'],
+        'vout': unspent['vout'],
+        'amount': unspent['amount']
+    }
+
+
+@app.route('/post', methods=['POST'])
+def send_post():
+    return {'pid': rpc.send_raw_transaction(request.data['hex'])}

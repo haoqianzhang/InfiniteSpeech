@@ -1,0 +1,43 @@
+.space-4xs {
+    height: 5px;
+}
+
+.space-3xs {
+    height: 10px;
+}
+
+.space-xxs {
+    height: 15px;
+}
+
+.space-xs {
+    height: 20px;
+}
+
+.space-sm {
+    height: 25px;
+}
+
+.space-md {
+    height: 40px;
+}
+
+.space-lg {
+    height: 60px;
+}
+
+.space-xl {
+    height: 80px;
+}
+
+.space-xxl {
+    height: 100px;
+}
+
+.space-3xl {
+    height: 120px;
+}
+
+.space-4xl {
+    height: 200px;
+}
