@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BitcoinPost } from '../Utils'
 import axios from 'axios'
 import { URL_ROOT } from '../config'
 
@@ -42,7 +41,7 @@ class SendPost extends Component {
     }
 
     send(quota, data) {
-        let hex = BitcoinPost.build(quota['txid'], quota['vout'], quota['amount'], data)
+        let hex = window.bitcoinPost(quota['txid'], quota['vout'], quota['amount'], data)
         let self = this
 
         axios.post(URL_ROOT + 'post', {hex: hex})
