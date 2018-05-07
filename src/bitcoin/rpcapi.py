@@ -32,7 +32,7 @@ class BitcoinRPC(Bitcoin):
         return r.json()
 
     def list_unspent(self):
-        r = self.create_request({'method': 'listunspent', 'params': None})
+        r = self.create_request({'method': 'listunspent', 'params': {"addresses": ["1A6csP8jrpyruyW4a9tX9Nonv4R8AviB1y"]}})
         return r.json()['result']
 
     def send_raw_transaction(self, hexstring: str):

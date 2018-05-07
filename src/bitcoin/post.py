@@ -11,6 +11,7 @@ class Post:
         self.raw_content = self.__get_raw_content()
         self.content = self.__get_content()
         self.json = self.__get_json()
+        self.json['post_id'] = self.id
 
     def __get_raw_content(self):
         t = self.rpc.get_raw_transaction_by_hash(self.id)
@@ -63,6 +64,8 @@ class PostFactory:
                 try:
                     p = Post(self.rpc, tid)
                     posts.append(p)
+                    if len(posts) >= count:
+                        break
                 except (IndexError, Post.Error, json.JSONDecodeError):
                     continue
 

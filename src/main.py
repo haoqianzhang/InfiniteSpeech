@@ -18,7 +18,7 @@ def get_posts(count, offset=0):
 def get_quota():
     unspent = rpc.list_unspent()[0]
     return {
-        'quota': unspent['txid'],
+        'txid': unspent['txid'],
         'vout': unspent['vout'],
         'amount': unspent['amount']
     }
