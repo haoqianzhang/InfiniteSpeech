@@ -66,7 +66,7 @@ class PostFactory:
                     posts.append(p)
                     if len(posts) >= count:
                         break
-                except (IndexError, Post.Error, json.JSONDecodeError):
+                except (IndexError, TypeError, Post.Error, json.JSONDecodeError):
                     continue
 
         return posts
