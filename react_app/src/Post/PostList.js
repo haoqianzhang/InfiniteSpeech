@@ -34,9 +34,9 @@ class PostList extends Component {
 
     fetchPosts(offset=0) {
         let self = this
-        if (GlobalStore.posts.length >= PAGE_SIZE + offset) {
+        if (Object.keys(GlobalStore.postMap).length >= PAGE_SIZE + offset) {
             let posts = []
-            GlobalStore.posts.forEach((element, index) => {
+            GlobalStore.postMap.forEach((element, index) => {
                 posts.push(<PostItem key={index} post={element} />)
             })
             self.setState({
@@ -49,7 +49,6 @@ class PostList extends Component {
                 let posts = []
                 response.data.forEach((element, index) => {
                     GlobalStore.postMap[element.post_id] = element
-                    GlobalStore.posts.push(element)
                     posts.push(<PostItem key={index} post={element} />)
                 })
                 self.setState({

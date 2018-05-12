@@ -8,6 +8,8 @@ flask = "*"
 requests = "*"
 flask-api = "*"
 uwsgi = "*"
+pymongo = "*"
+jsonschema = "*"
 
 [dev-packages]
 pylint = "*"

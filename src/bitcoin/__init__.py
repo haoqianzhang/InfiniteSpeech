@@ -1,3 +1,3 @@
 from .rpcapi import BitcoinRPC
-from .post import PostFactory, Post
-from .core import Bitcoin
+from .raw_post import RawPost, RawPostFactory
+from .interfaces import Bitcoin

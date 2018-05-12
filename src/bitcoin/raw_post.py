@@ -1,20 +1,24 @@
-from .core import Bitcoin
+from .interfaces import Bitcoin
 from codecs import decode
 import json
 
 
-class Post:
+class RawPost:
     def __init__(self, rpc_instance: Bitcoin, transaction_id):
         self.rpc = rpc_instance
         self.id = transaction_id
         self.author = self.__get_author()
+        self.time = 0
         self.raw_content = self.__get_raw_content()
         self.content = self.__get_content()
         self.json = self.__get_json()
         self.json['post_id'] = self.id
+        self.json['user_id'] = self.author
+        self.json['output_time'] = self.time
 
     def __get_raw_content(self):
         t = self.rpc.get_raw_transaction_by_hash(self.id)
+        self.time = t['result']['time']
         return t['result']['vout'][0]['scriptPubKey']['asm']
 
     def __get_author(self):
@@ -34,39 +38,44 @@ class Post:
         pass
 
 
-class PostFactory:
+class RawPostFactory:
 
     def __init__(self, rpc_instance: Bitcoin):
         self.rpc = rpc_instance
+        self.height = 1
 
-    def get_posts(self, count, offset=0) -> list:
+    def get_posts(self, height=1) -> list:
         """
         通过查找指定数量的 block 的内容生成 Post 类，如果数据内容不能正确解析则跳过
 
         TODO: 实现 Post 偏移量而不是 Block 的偏移量
 
-        :param count: 请求合法 Post 的数量
-        :param offset: Block 偏移量
+        :param height:
         :return: 可以成功解析的 Post
         """
-        height = self.rpc.get_blockchain_height()
+        self.height = self.rpc.get_blockchain_height()
+        if height < 1 or height > self.height:
+            return []
 
         posts = []
-        position = height - offset
-        while len(posts) < count or position < 1:
-            hashcode = self.rpc.get_block_hash(position)
-            position -= 1
-            tids = self.rpc.get_transactions_by_block_hash(hashcode)
+        position = height
+        while position <= self.height:
+            position += 1
+
+            try:
+                hashcode = self.rpc.get_block_hash(position - 1)
+                tids = self.rpc.get_transactions_by_block_hash(hashcode)
+            except TypeError:
+                continue
+
             if len(tids) < 2:
                 continue
 
             for tid in tids:
                 try:
-                    p = Post(self.rpc, tid)
+                    p = RawPost(self.rpc, tid)
                     posts.append(p)
-                    if len(posts) >= count:
-                        break
-                except (IndexError, TypeError, Post.Error, json.JSONDecodeError):
+                except (IndexError, TypeError, RawPost.Error, json.JSONDecodeError):
                     continue
 
         return posts
