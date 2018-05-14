@@ -76,7 +76,7 @@ class RawPostFactory:
 
             for tid in tids:
                 try:
-                    p = RawPost(self.rpc, tid, position)
+                    p = RawPost(self.rpc, tid, position - 1)
                     p.confirmations = self.height - position + 1
                     posts.append(p)
                 except (IndexError, TypeError, RawPost.Error, json.JSONDecodeError):

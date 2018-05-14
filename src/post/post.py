@@ -11,7 +11,7 @@ def get_posts(count: int, offset: int, height: int) -> list:
     for post in collection.find(limit=count, skip=offset).sort('output_time', DESCENDING):
         post.pop('_id', None)
         if post['confirmed']:
-            post['confirmations'] = height - post['height'] + 1
+            post['confirmations'] = height - post['height']
         else:
             post['confirmations'] = 0
         posts.append(post)

@@ -16,7 +16,9 @@ rpc = BitcoinRPC()
 @app.route('/posts/<int:count>', methods=['GET'])
 @app.route('/posts/<int:count>/offset/<int:offset>')
 def get_posts(count, offset=0):
-    height = rpc.get_blockchain_height()
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    collection = client.test.height
+    height = int(collection.find_one({})['height'])
     return posts(count, offset, height)
 
 
