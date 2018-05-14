@@ -43,6 +43,7 @@ def send_post():
     json_content['post_id'] = transaction['txid']
     json_content['user_id'] = transaction['vout'][1]['scriptPubKey']['addresses'][0]
     json_content['input_time'] = int(datetime.utcnow().timestamp())
+    json_content['output_time'] = 0
     json_content['confirmed'] = False
 
     try:
