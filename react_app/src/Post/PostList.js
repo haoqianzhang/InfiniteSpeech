@@ -36,7 +36,7 @@ class PostList extends Component {
         let self = this
         if (Object.keys(GlobalStore.postMap).length >= PAGE_SIZE + offset) {
             let posts = []
-            for (var index in posts) {
+            for (var index in GlobalStore.postMap) { 
                 posts.push(<PostItem key={index} post={GlobalStore.postMap[index]} />)
             }
             self.setState({
