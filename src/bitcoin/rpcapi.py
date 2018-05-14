@@ -42,3 +42,7 @@ class BitcoinRPC(Bitcoin):
     def send_raw_transaction(self, hexstring: str):
         r = self.create_request({'method': 'sendrawtransaction', 'params': [hexstring]})
         return r.json()['result']
+
+    def decode_raw_transaction(self, hexstring: str):
+        r = self.create_request({'method': 'decoderawtransaction', 'params': [hexstring]})
+        return r.json()['result']

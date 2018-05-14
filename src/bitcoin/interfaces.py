@@ -29,3 +29,7 @@ class Bitcoin(metaclass=ABCMeta):
     @abstractmethod
     def send_raw_transaction(self, hexstring: str) -> str:
         pass
+
+    @abstractmethod
+    def decode_raw_transaction(self, hexstring: str) -> str:
+        pass

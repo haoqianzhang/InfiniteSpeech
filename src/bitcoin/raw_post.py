@@ -4,7 +4,7 @@ import json
 
 
 class RawPost:
-    def __init__(self, rpc_instance: Bitcoin, transaction_id):
+    def __init__(self, rpc_instance: Bitcoin, transaction_id: str):
         self.rpc = rpc_instance
         self.id = transaction_id
         self.author = self.__get_author()
@@ -15,6 +15,7 @@ class RawPost:
         self.json['post_id'] = self.id
         self.json['user_id'] = self.author
         self.json['output_time'] = self.time
+        self.json['confirmed'] = True
 
     def __get_raw_content(self):
         t = self.rpc.get_raw_transaction_by_hash(self.id)

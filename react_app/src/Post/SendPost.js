@@ -27,7 +27,7 @@ class SendPost extends Component {
         let data = {
             reply_to: '',
             category: '/hello/world',
-            input_time: Math.floor(Date.now() / 1000),
+            // input_time: Math.floor(Date.now() / 1000),
             client: 'Infnote React APP'
         }
         data = Object.assign(data, this.state)
@@ -45,7 +45,7 @@ class SendPost extends Component {
     send(quota, data) {
         let hex = window.bitcoinPost(quota['txid'], quota['vout'], quota['amount'], data)
         let self = this
-
+        
         axios.post(URL_ROOT + 'post', {hex: hex})
             .then(function (response) {
                 self.setState({content: ''})
@@ -54,6 +54,7 @@ class SendPost extends Component {
             .catch(function (error) {
                 console.log(error)
             })
+            
     }
 
     render() {
