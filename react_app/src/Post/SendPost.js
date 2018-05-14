@@ -50,6 +50,7 @@ class SendPost extends Component {
             .then(function (response) {
                 self.setState({content: ''})
                 alert('Post has been sent, post id: ' + response.data.pid)
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)
