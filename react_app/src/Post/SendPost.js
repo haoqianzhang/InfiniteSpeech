@@ -27,7 +27,7 @@ class SendPost extends Component {
         let data = {
             reply_to: '',
             category: '/hello/world',
-            // input_time: Math.floor(Date.now() / 1000),
+            input_time: Math.floor(Date.now() / 1000),
             client: 'Infnote React APP'
         }
         data = Object.assign(data, this.state)
