@@ -16,7 +16,8 @@ rpc = BitcoinRPC()
 @app.route('/posts/<int:count>', methods=['GET'])
 @app.route('/posts/<int:count>/offset/<int:offset>')
 def get_posts(count, offset=0):
-    return posts(count, offset)
+    height = rpc.get_blockchain_height()
+    return posts(count, offset, height)
 
 
 @app.route('/quota', methods=['GET'])

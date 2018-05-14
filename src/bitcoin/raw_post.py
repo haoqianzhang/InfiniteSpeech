@@ -4,18 +4,20 @@ import json
 
 
 class RawPost:
-    def __init__(self, rpc_instance: Bitcoin, transaction_id: str):
+    def __init__(self, rpc_instance: Bitcoin, transaction_id: str, height: int):
         self.rpc = rpc_instance
         self.id = transaction_id
         self.author = self.__get_author()
         self.time = 0
         self.raw_content = self.__get_raw_content()
         self.content = self.__get_content()
+        self.confirmations = 0
         self.json = self.__get_json()
         self.json['post_id'] = self.id
         self.json['user_id'] = self.author
         self.json['output_time'] = self.time
         self.json['confirmed'] = True
+        self.json['height'] = height
 
     def __get_raw_content(self):
         t = self.rpc.get_raw_transaction_by_hash(self.id)
@@ -74,7 +76,8 @@ class RawPostFactory:
 
             for tid in tids:
                 try:
-                    p = RawPost(self.rpc, tid)
+                    p = RawPost(self.rpc, tid, position)
+                    p.confirmations = self.height - position + 1
                     posts.append(p)
                 except (IndexError, TypeError, RawPost.Error, json.JSONDecodeError):
                     continue

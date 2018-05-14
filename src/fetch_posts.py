@@ -38,7 +38,9 @@ schema = {
         'output_time': {'type': 'integer'},
         'client': {'type': 'string', 'maxLength': 100},
 
+        'height': {'type': 'integer'},
         'confirmed': {'type': 'boolean'},
+        # 'confirmations': {'type': 'integer'},
     },
 }
 
